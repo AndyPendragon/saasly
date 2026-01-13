@@ -26,10 +26,10 @@
       </a>
 
       <div class="hidden items-center md:gap-8 lg:gap-12 md:flex lg:pl-20">
-        <a href="#!" class="hover:text-indigo-600">Home</a>
-        <a href="#!" class="hover:text-indigo-600">Features</a>
-        <a href="#!" class="hover:text-indigo-600">Pricing</a>
-        <a href="#!" class="hover:text-indigo-600">Docs</a>
+        <a href="#hero-section" class="hover:text-indigo-600">Home</a>
+        <a href="#features-section" class="hover:text-indigo-600">Features</a>
+        <a href="#pricing" class="hover:text-indigo-600">Pricing</a>
+        <a href="#docs-section" class="hover:text-indigo-600">Docs</a>
       </div>
 
       <div
@@ -66,11 +66,13 @@
       <div class="flex items-center gap-4 md:gap-6">
         <button
           class="hidden md:block hover:bg-slate-100 transition px-4 py-2 border border-indigo-600 rounded-md"
+          id="navbar-signin"
         >
           Sign in
         </button>
         <button
           class="hidden md:block px-4 py-2 bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-md"
+          id="navbar-cta"
         >
           Get started
         </button>
@@ -99,6 +101,7 @@
     <div
       style="background-image: url('./assets/hero-section-dot-image.png')"
       class="flex flex-col items-center justify-center text-center bg-cover bg-no-repeat"
+      id="hero-section"
     >
       <a
         href="#"
@@ -141,11 +144,13 @@
       <div class="flex items-center gap-4 mt-6">
         <button
           class="bg-indigo-600 hover:bg-indigo-700 transition px-8 py-3 rounded-md text-white"
+          id="hero-section-primary-cta"
         >
           <span>Get Started</span>
         </button>
         <button
           class="flex items-center justify-center gap-2 border border-indigo-400 px-5 py-3 rounded-md text-indigo-600"
+          id="hero-section-secondary-cta"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -198,10 +203,10 @@
     </div>
 
     <!-- Features Section -->
-
-    <p class="text-center uppercase font-medium text-indigo-600 mt-28">
-      Features
-    </p>
+    <div id="features-section">
+      <p class="text-center uppercase font-medium text-indigo-600 mt-28">
+        Features
+      </p>
     <h3 class="text-3xl font-semibold text-center mx-auto mt-2">
       Features Overview
     </h3>
@@ -233,11 +238,11 @@
           alt="Card Image"
           height="{400}"
           width="{400}"
-        />
-        <h3 class="text-base font-semibold text-slate-700 mt-4">
-          User management
-        </h3>
-        <p class="text-sm text-slate-600 mt-1">
+          />
+          <h3 class="text-base font-semibold text-slate-700 mt-4">
+            User management
+          </h3>
+          <p class="text-sm text-slate-600 mt-1">
           Get instant insights into your finances with live dashboards.
         </p>
       </div>
@@ -257,6 +262,7 @@
         </p>
       </div>
     </div>
+  </div>
 
     <!-- Testimonials Section -->
 
