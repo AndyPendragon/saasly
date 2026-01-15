@@ -220,3 +220,99 @@ faqItems.forEach(item => {
         }
     });
 });
+
+// Popup Form
+(() => {
+  const FORM_ENDPOINT = "https://formspree.io/f/xaqqndrz";
+  const popover = document.getElementById("pricing-popover");
+  const backdrop = document.getElementById("popover-backdrop");
+  const closeBtn = document.getElementById("popover-close");
+  const form = document.getElementById("pricing-popover-form");
+  const status = document.getElementById("popover-status");
+  const planInput = document.getElementById("popover-plan");
+  const mailFallbackBtn = document.getElementById("popover-send-mail-fallback");
+
+  function openPopover(planLabel = "") {
+    planInput.value = planLabel;
+    status.textContent = "";
+    popover.classList.remove("hidden");
+    document.getElementById("first_name").focus();
+  }
+
+  function closePopover() {
+    popover.classList.add("hidden");
+  }
+
+  document.body.addEventListener("click", (ev) => {
+    const btn = ev.target.closest("#pricing button, #pricing a");
+    if (!btn) return;
+    const plan = btn.dataset.plan || btn.getAttribute("aria-label") || btn.textContent.trim().slice(0,50);
+    openPopover(plan);
+  });
+
+  // Close
+  closeBtn.addEventListener("click", closePopover);
+  backdrop.addEventListener("click", closePopover);
+
+  // Submit with Formspree (POST)
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    status.textContent = "Envoi en cours…";
+    const data = new FormData(form);
+
+    const payloadText = [
+      `Prénom: ${data.get("first_name")}`,
+      `Nom: ${data.get("last_name")}`,
+      `Entreprise: ${data.get("company")}`,
+      `Intérêts: ${data.get("interests")}`,
+      `Projet: ${data.get("projects")}`,
+      `Plan: ${data.get("plan")}`
+    ].join("\n");
+
+    try {
+      if (FORM_ENDPOINT.includes("YOUR_FORM_ID")) {
+        status.textContent = "Formspree non configuré — ouverture du client mail...";
+        openMailClient(payloadText);
+        return;
+      }
+
+      const resp = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: data
+      });
+
+      if (resp.ok) {
+        status.textContent = "Merci — votre message a été envoyé.";
+        form.reset();
+        setTimeout(closePopover, 1400);
+      } else {
+        const json = await resp.json().catch(()=>null);
+        status.textContent = json && json.error ? `Erreur : ${json.error}` : "Erreur d'envoi. Essayez l'ouverture du mail.";
+      }
+    } catch (err) {
+      status.textContent = "Problème réseau. Essayez l'ouverture du mail.";
+      console.error(err);
+    }
+  });
+
+  // Mail fallback
+  function openMailClient(bodyLines) {
+    const subject = encodeURIComponent("Demande depuis pricing — présentation");
+    const body = encodeURIComponent(bodyLines.join("\n"));
+    window.location.href = `mailto:contact@tondomaine.com?subject=${subject}&body=${body}`;
+  }
+
+  mailFallbackBtn.addEventListener("click", () => {
+    const lines = [
+      `Prénom: ${document.getElementById("first_name").value || ""}`,
+      `Nom: ${document.getElementById("last_name").value || ""}`,
+      `Entreprise: ${document.getElementById("company").value || ""}`,
+      `Intérêts: ${document.getElementById("interests").value || ""}`,
+      `Projet: ${document.getElementById("projects").value || ""}`,
+      `Plan: ${planInput.value || ""}`
+    ];
+    openMailClient(lines);
+  });
+
+})();
