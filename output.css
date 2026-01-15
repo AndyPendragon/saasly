@@ -694,6 +694,12 @@
   .pb-14 {
     padding-bottom: calc(var(--spacing) * 14);
   }
+  .pt-16 {
+    padding-top: calc(var(--spacing) * 16);
+  }
+    .pt-28 {
+    padding-top: calc(var(--spacing) * 28);
+  }
   .text-center {
     text-align: center;
   }
